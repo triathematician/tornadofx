@@ -64,11 +64,11 @@ class SqueezeBoxSkin(val control: SqueezeBox) : SkinBase<SqueezeBox>(control) {
     }
 
     override fun computeMinWidth(height: Double, topInset: Double, rightInset: Double, bottomInset: Double, leftInset: Double): Double {
-        return children.mapEach { minWidth(height) }.max() ?: 0.0 + leftInset + rightInset
+        return children.mapEach { minWidth(height) }.maxOrNull() ?: 0.0 + leftInset + rightInset
     }
 
     override fun computePrefWidth(height: Double, topInset: Double, rightInset: Double, bottomInset: Double, leftInset: Double): Double {
-        return children.mapEach { prefWidth(height) }.max() ?: 0.0 + leftInset + rightInset
+        return children.mapEach { prefWidth(height) }.maxOrNull() ?: 0.0 + leftInset + rightInset
     }
 
     override fun layoutChildren(contentX: Double, contentY: Double, contentWidth: Double, contentHeight: Double) {

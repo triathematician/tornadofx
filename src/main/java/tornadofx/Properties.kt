@@ -5,7 +5,9 @@ import javafx.beans.binding.*
 import javafx.beans.property.*
 import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder
 import javafx.beans.value.*
-import javafx.collections.*
+import javafx.collections.ObservableList
+import javafx.collections.ObservableMap
+import javafx.collections.ObservableSet
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 import java.util.concurrent.Callable
@@ -27,14 +29,14 @@ class PropertyDelegate<T>(val fxProperty: Property<T>) : ReadWriteProperty<Any, 
 
 }
 
-fun <T> Any.getProperty(prop: KMutableProperty1<*, T>): ObjectProperty<T> {
+fun <T> Any.getProperty(prop: KMutableProperty1<*, T>): Property<T> {
     // avoid kotlin-reflect dependency
     val field = requireNotNull(javaClass.findFieldByName("${prop.name}\$delegate")) { "No delegate field with name '${prop.name}' found" }
 
     field.isAccessible = true
     @Suppress("UNCHECKED_CAST")
     val delegate = field.get(this) as PropertyDelegate<T>
-    return delegate.fxProperty as ObjectProperty<T>
+    return delegate.fxProperty
 }
 
 fun Class<*>.findFieldByName(name: String): Field? {
@@ -120,7 +122,7 @@ fun <S : Any, T : Any> S.observable(
         setter: KFunction2<S, T, Unit>? = null,
         propertyName: String? = null,
         @Suppress("UNUSED_PARAMETER") propertyType: KClass<T>? = null
-): ObjectProperty<T> {
+): Property<T> {
     if (getter == null && propertyName == null) throw AssertionError("Either getter or propertyName must be provided")
     val propName = propertyName
             ?: getter?.name?.substring(3)?.decapitalize()
@@ -130,7 +132,7 @@ fun <S : Any, T : Any> S.observable(
         this.name(propName)
         if (getter != null) this.getter(getter.javaMethod)
         if (setter != null) this.setter(setter.javaMethod)
-    }.build() as ObjectProperty<T>
+    }.build() as Property<T>
 }
 
 enum class SingleAssignThreadSafetyMode {

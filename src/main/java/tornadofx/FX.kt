@@ -32,6 +32,7 @@ import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass
+import kotlin.reflect.KFunction1
 import kotlin.reflect.KProperty
 
 open class Scope() {
@@ -501,7 +502,7 @@ fun EventTarget.addChildIfPossible(node: Node, index: Int? = null) {
 
     if (FX.ignoreParentBuilder != FX.IgnoreParentBuilder.No) return
     if (this is Node) {
-        val target = builderTarget
+        val target = builderTarget as KFunction1<EventTarget, ObjectProperty<Node>>?
         if (target != null) {
             // Trick to get around the disallowed use of invoke on out projected types
             @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
