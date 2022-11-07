@@ -223,15 +223,15 @@ class PersonAutoModel(var person: Person? = null) : ViewModel() {
 
 // JavaFX Property
 open class PersonModel(person: Person? = null) : ItemViewModel<Person>(person) {
-    val name = bind { item?.nameProperty() }
-    val age = bind { item?.ageProperty() }
-    val phone = bind { item?.phoneProperty() }
-    val email = bind { item?.emailProperty() }
+    val name: Property<String> = bind { item?.nameProperty() }
+    val age: Property<Int> = bind { item?.ageProperty() }
+    val phone: Property<String> = bind { item?.phoneProperty() }
+    val email: Property<String> = bind { item?.emailProperty() }
 }
 
 // Java POJO getter/setter property
 class JavaPersonModel(person: JavaPerson) : ViewModel() {
-    val name = bind { person.observable(JavaPerson::getName, JavaPerson::setName) }
+    val name: Property<String> = bind { person.observable(JavaPerson::getName, JavaPerson::setName) }
 }
 
 // Kotlin var property
