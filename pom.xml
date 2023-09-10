@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>no.tornado</groupId>
+    <!--
+      This is a version of TornadoFx updated for Java11, JavaFx18, and Kotlin 1.6.21.
+      It was forked from the jdk10 branch at https://github.com/edvin/tornadofx.
+      There are a few minor changes to work with the newer versions of Java, JavaFx, and Kotlin,
+      but the majority of the code is unchanged.
+    -->
+
+    <groupId>com.googlecode.blaisemath.tornado</groupId>
     <artifactId>tornadofx</artifactId>
     <version>2.0.0-fx18k16-rc0</version>
     <packaging>jar</packaging>
