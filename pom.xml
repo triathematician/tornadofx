@@ -160,12 +160,16 @@
             <organization>Xactware</organization>
             <organizationUrl>https://www.xactware.com/</organizationUrl>
         </developer>
+        <developer>
+            <name>Elisha Peterson</name>
+            <email>triathematician@gmail.com</email>
+        </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:edvin/tornadofx.git</connection>
-        <developerConnection>scm:git:git@github.com:edvin/tornadofx.git</developerConnection>
-        <url>git@github.com:edvin/tornadofx.git</url>
+        <connection>scm:git:git@github.com:triathematician/tornadofx.git</connection>
+        <developerConnection>scm:git:git@github.com:triathematician/tornadofx.git</developerConnection>
+        <url>git@github.com:edvin/triathematician.git</url>
     </scm>
 
     <build>
