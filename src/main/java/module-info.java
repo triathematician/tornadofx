@@ -25,4 +25,6 @@ module tornadofx {
 
     uses ChildInterceptor;
     uses Stylesheet;
+
+    provides java.net.spi.URLStreamHandlerProvider with tornadofx.CssURLStreamHandlerProvider;
 }
