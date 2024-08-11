@@ -10,7 +10,7 @@
 
     <groupId>com.googlecode.blaisemath.tornado</groupId>
     <artifactId>tornadofx-fx21k18</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.0.2</version>
     <packaging>jar</packaging>
     <name>TornadoFX</name>
     <description>Lightweight JavaFX Framework for Kotlin</description>
