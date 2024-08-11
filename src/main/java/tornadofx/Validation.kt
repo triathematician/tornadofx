@@ -75,6 +75,7 @@ class ValidationContext {
                     if (!it) validator.validate(decorateErrors)
                 }
             }
+            ValidationTrigger.None -> { }
         }
         validators.add(validator)
         return validator

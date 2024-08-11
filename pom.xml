@@ -2,14 +2,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-      This is a version of TornadoFx updated for Java11, JavaFx18, and Kotlin 1.6.21.
+      This is a version of TornadoFx updated for Java17, JavaFx21, and Kotlin 1.8.22.
       It was forked from the jdk10 branch at https://github.com/edvin/tornadofx.
       There are a few minor changes to work with the newer versions of Java, JavaFx, and Kotlin,
       but the majority of the code is unchanged.
     -->
 
     <groupId>com.googlecode.blaisemath.tornado</groupId>
-    <artifactId>tornadofx-fx18k16</artifactId>
+    <artifactId>tornadofx-fx21k18</artifactId>
     <version>2.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>TornadoFX</name>
@@ -220,14 +220,14 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <release>11</release>
+                    <release>17</release>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jetbrains.dokka</groupId>
                 <artifactId>dokka-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
+                <version>${kotlin.version.dokka}</version>
                 <executions>
                     <execution>
                         <phase>pre-site</phase>
@@ -239,7 +239,7 @@
                 <configuration>
                     <reportNotDocumented>false</reportNotDocumented>
                     <skipEmptyPackages>true</skipEmptyPackages>
-                    <jdkVersion>8</jdkVersion>
+                    <jdkVersion>17</jdkVersion>
                     <impliedPlatforms>
                         <platform>JVM</platform>
                     </impliedPlatforms>
@@ -403,15 +403,16 @@
     </pluginRepositories>
 
     <properties>
-        <javafx.version>18.0.2</javafx.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <javafx.version>21.0.4</javafx.version>
+        <kotlin.version>1.8.22</kotlin.version>
+        <kotlin.version.dokka>1.8.20</kotlin.version.dokka>
 
         <org.glassfish.javax.json.version>1.1.4</org.glassfish.javax.json.version>
-        <org.apache.httpcomponents.httpclient.version>4.5.13</org.apache.httpcomponents.httpclient.version>
+        <org.apache.httpcomponents.httpclient.version>4.5.14</org.apache.httpcomponents.httpclient.version>
         <org.apache.felix.framework.version>7.0.5</org.apache.felix.framework.version>
         <junit.version>4.13.2</junit.version>
-        <org.testfx.testfx-core.version>4.0.15-alpha</org.testfx.testfx-core.version>
-        <org.testfx.testfx-junit.version>4.0.15-alpha</org.testfx.testfx-junit.version>
+        <org.testfx.testfx-core.version>4.0.18</org.testfx.testfx-core.version>
+        <org.testfx.testfx-junit.version>4.0.18</org.testfx.testfx-junit.version>
         <de.jensd.fontawesomefx.version>4.7.0-9.1.2</de.jensd.fontawesomefx.version>
 
         <maven.release.version>2.1</maven.release.version>
@@ -420,10 +421,10 @@
         <maven.jar.version>3.0.2</maven.jar.version>
         <maven.bundle.version>3.5.1</maven.bundle.version>
         <maven.gpg.version>1.4</maven.gpg.version>
-        <maven.surefire.version>3.0.0-M3</maven.surefire.version>
+        <maven.surefire.version>3.1.2</maven.surefire.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 </project>
