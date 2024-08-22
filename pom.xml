@@ -2,15 +2,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-      This is a version of TornadoFx updated for Java17, JavaFx21, and Kotlin 1.8.22.
+      This is a version of TornadoFx updated for Java17, JavaFx21, and Kotlin 1.6.21.
       It was forked from the jdk10 branch at https://github.com/edvin/tornadofx.
       There are a few minor changes to work with the newer versions of Java, JavaFx, and Kotlin,
       but the majority of the code is unchanged.
     -->
 
     <groupId>com.googlecode.blaisemath.tornado</groupId>
-    <artifactId>tornadofx-fx21k18</artifactId>
-    <version>2.0.4-SNAPSHOT</version>
+    <artifactId>tornadofx-fx21k16</artifactId>
+    <version>2.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>TornadoFX</name>
     <description>Lightweight JavaFX Framework for Kotlin</description>
@@ -405,8 +405,8 @@
 
     <properties>
         <javafx.version>21.0.4</javafx.version>
-        <kotlin.version>1.8.22</kotlin.version>
-        <kotlin.version.dokka>1.8.20</kotlin.version.dokka>
+        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version.dokka>1.6.21</kotlin.version.dokka>
 
         <org.glassfish.javax.json.version>1.1.4</org.glassfish.javax.json.version>
         <org.apache.httpcomponents.httpclient.version>4.5.14</org.apache.httpcomponents.httpclient.version>
