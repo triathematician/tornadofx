@@ -19,6 +19,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
+import java.util.Locale
+import java.util.Locale.getDefault
 import javax.json.*
 import javax.json.JsonValue.ValueType.NULL
 import javax.json.stream.JsonGenerator
@@ -411,7 +413,7 @@ fun InputStream.toJSONArray(): JsonArray = Json.createReader(this).use { it.read
 fun InputStream.toJSON(): JsonObject = Json.createReader(this).use { it.readObject() }
 
 fun JsonObject?.contains(text: String?, ignoreCase: Boolean = true) =
-        if (this == null || text == null) false else toString().toLowerCase().contains(text, ignoreCase)
+        if (this == null || text == null) false else toString().lowercase(getDefault()).contains(text, ignoreCase)
 
 fun JsonModel?.contains(text: String?, ignoreCase: Boolean = true) = this?.toJSON()?.contains(text, ignoreCase) ?: false
 

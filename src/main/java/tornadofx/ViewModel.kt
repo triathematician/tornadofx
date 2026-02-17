@@ -63,7 +63,10 @@ open class ViewModel : Component(), ScopedInstance {
                 if (it.wasAdded()) {
                     it.addedSubList.forEach { facade ->
                         facade.addListener { obs, _, nv ->
-                            if (validate(fields = *arrayOf(facade))) propertyMap[obs]!!.invoke()?.value = nv
+                            if (validate(fields = arrayOf(facade))) {
+                                val prop = propertyMap[obs]!!.invoke() as Property<Any?>?
+                                prop?.value = nv
+                            }
                         }
                     }
                 }
@@ -284,17 +287,20 @@ open class ViewModel : Component(), ScopedInstance {
         }
     }
 
-    fun assignValue(facade: Property<*>, prop: Property<*>?, defaultValue: Any? = null) {
+    @Suppress("UNCHECKED_CAST")
+    fun <T> assignValue(facade: Property<T>, prop: Property<T>?, defaultValue: T? = null) {
         facade.value = prop?.value ?: defaultValue
 
         // Never allow null collection values
         if (facade.value == null) {
             when (facade) {
-                is ListProperty<*> -> facade.value = FXCollections.observableArrayList()
-                is SetProperty<*> -> facade.value = FXCollections.observableSet()
-                is MapProperty<*, *> -> facade.value = FXCollections.observableHashMap()
-                is MutableList<*> -> facade.value = ArrayList<Any>()
-                is MutableMap<*, *> -> facade.value = HashMap<Any, Any>()
+                is ListProperty<*> -> (facade as ListProperty<Any?>).value = FXCollections.observableArrayList()
+                is SetProperty<*> -> (facade as SetProperty<Any?>).value = FXCollections.observableSet()
+                is MapProperty<*, *> -> (facade as MapProperty<Any?, Any?>).value = FXCollections.observableHashMap()
+
+                // not sure these are right, but keeping legacy behavior from 1.x
+                is MutableList<*> -> (facade as Property<MutableList<Any?>>).value = ArrayList()
+                is MutableMap<*, *> -> (facade as Property<MutableMap<Any?, Any?>>).value = HashMap()
             }
         }
     }

@@ -121,8 +121,8 @@ inline fun <reified S : T, reified T : Any> bindStringProperty(
             val stringBinding = Bindings.createStringBinding(toStringConverter, property)
             stringProperty.bind(stringBinding)
         } else when {
-            effectiveConverter != null -> stringProperty.bindBidirectional(property as Property<S>, effectiveConverter as StringConverter<S>)
-            format != null -> stringProperty.bindBidirectional(property as Property<S>, format)
+            effectiveConverter != null -> stringProperty.bindBidirectional(property, effectiveConverter as StringConverter<S>)
+            format != null -> stringProperty.bindBidirectional(property, format)
             else -> throw IllegalArgumentException("Cannot convert from ${S::class} to String without an explicit converter or format")
         }
     }
@@ -219,7 +219,7 @@ fun <T> ObservableValue<T>.selectBoolean(nested: (T) -> BooleanExpression): Bool
         override fun getValue() = currentNested.value
 
         override fun setValue(v: Boolean?) {
-            (currentNested as? WritableValue<*>)?.value = v
+            (currentNested as? WritableValue<Boolean>)?.value = v
             super.setValue(v)
         }
 

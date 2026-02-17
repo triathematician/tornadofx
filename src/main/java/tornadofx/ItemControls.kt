@@ -692,11 +692,10 @@ fun <S, T> TableView<S>.column(title: String, valueProvider: (TableColumn.CellDa
  * Configure a cellValueFactory for the column. If the returned value is not observable, it is automatically
  * wrapped in a SimpleObjectProperty for convenience.
  */
-@Suppress("UNCHECKED_CAST")
-infix fun <S> TableColumn<S, *>.value(cellValueFactory: (TableColumn.CellDataFeatures<S, Any>) -> Any?) = apply {
-    this.cellValueFactory = Callback {
-        val createdValue = cellValueFactory(it as TableColumn.CellDataFeatures<S, Any>)
-        (createdValue as? ObservableValue<Any>) ?: SimpleObjectProperty(createdValue)
+infix fun <S, T> TableColumn<S, T>.value(cellValueFactory: (TableColumn.CellDataFeatures<S, T>) -> T?) = apply {
+    this.cellValueFactory = Callback<TableColumn.CellDataFeatures<S, T>, ObservableValue<T>> {
+        val createdValue = cellValueFactory(it as TableColumn.CellDataFeatures<S, T>)
+        (createdValue as? ObservableValue<T>) ?: SimpleObjectProperty(createdValue)
     }
 }
 

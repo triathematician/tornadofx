@@ -10,6 +10,8 @@ import org.osgi.framework.startlevel.BundleStartLevel
 import tornadofx.*
 import tornadofx.osgi.impl.fxBundleContext
 import java.nio.file.Files
+import java.util.Locale
+import java.util.Locale.getDefault
 
 class OSGIConsole : View() {
     override val root = borderpane {
@@ -81,7 +83,7 @@ class OSGIConsole : View() {
                 }
 
                 setOnDragDropped { event ->
-                    if (event.dragboard.hasFiles() && event.dragboard.files.first().name.toLowerCase().endsWith(".jar")) {
+                    if (event.dragboard.hasFiles() && event.dragboard.files.first().name.lowercase(getDefault()).endsWith(".jar")) {
                         event.dragboard.files.forEach {
                             fxBundleContext.installBundle("file:${it.absolutePath}")
                         }

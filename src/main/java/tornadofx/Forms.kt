@@ -18,6 +18,8 @@ import javafx.scene.layout.*
 import javafx.scene.layout.Priority.SOMETIMES
 import javafx.stage.Stage
 import java.util.*
+import java.util.Locale
+import java.util.Locale.getDefault
 import java.util.concurrent.Callable
 
 fun EventTarget.form(op: Form.() -> Unit = {}) = opcr(this, Form(), op)
@@ -232,7 +234,7 @@ class Field(text: String? = null, orientation: Orientation = HORIZONTAL, forceLa
 
     init {
         inputContainer.addClass(Stylesheet.inputContainer)
-        inputContainer.addPseudoClass(orientation.name.toLowerCase())
+        inputContainer.addPseudoClass(orientation.name.lowercase(getDefault()))
         children.add(inputContainer)
 
         // Register/deregister with parent Fieldset
