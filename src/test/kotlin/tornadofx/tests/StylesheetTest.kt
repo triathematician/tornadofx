@@ -26,6 +26,7 @@ import tornadofx.Stylesheet.Companion.label
 import tornadofx.Stylesheet.Companion.pannable
 import tornadofx.Stylesheet.Companion.star
 import java.net.URI
+import java.util.Locale.getDefault
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertFalse
@@ -61,9 +62,9 @@ class StylesheetTest {
 
     val primaryStage: Stage = FxToolkit.registerPrimaryStage()
 
-    val renderedProp by cssproperty<String> { "${it.toUpperCase()}!!!" }
+    val renderedProp by cssproperty<String> { "${it.uppercase(getDefault())}!!!" }
     val renderedBool by cssproperty<Bool> { it.name }
-    val renderedMulti by cssproperty<MultiValue<String>> { it.elements.joinToString { "${it.toUpperCase()}!!!" } }
+    val renderedMulti by cssproperty<MultiValue<String>> { it.elements.joinToString { "${it.uppercase(getDefault())}!!!" } }
 
     enum class Bool { TRUE, FALSE, FILE_NOT_FOUND }
 

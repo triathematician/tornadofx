@@ -13,7 +13,8 @@ import org.junit.Test
 import org.testfx.api.FxToolkit
 import tornadofx.*
 import java.text.NumberFormat
-import java.util.*
+import java.util.Locale
+import java.util.Locale.getDefault
 
 /**
  * @author carl
@@ -41,7 +42,7 @@ class ControlsTest {
 
         view.textfield(SimpleIntegerProperty(101), NumberStringConverter())
 
-        view.textfield() {
+        view.textfield {
             bind(SimpleIntegerProperty(102))
         }
 
@@ -71,7 +72,7 @@ class ControlsTest {
         val property = SimpleStringProperty("Daan")
         val label = view.label(property)
         val labelWithConverter = view.label(property, converter = object : StringConverter<String>() {
-            override fun toString(string: String?) = string?.toUpperCase() ?: ""
+            override fun toString(string: String?) = string?.uppercase(getDefault()) ?: ""
             override fun fromString(string: String?) = throw NotImplementedError()
         })
 

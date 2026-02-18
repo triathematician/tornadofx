@@ -16,7 +16,6 @@ import javafx.scene.paint.Paint
 import tornadofx.FX.Companion.runAndWait
 import java.time.LocalDate
 import java.util.*
-import java.util.concurrent.Callable
 import kotlin.collections.ArrayList
 import kotlin.reflect.KFunction
 import kotlin.reflect.KMutableProperty1
@@ -25,10 +24,10 @@ import kotlin.reflect.KProperty1
 val viewModelBundle: ResourceBundle = ResourceBundle.getBundle("tornadofx/i18n/ViewModel")
 
 open class ViewModel : Component(), ScopedInstance {
-    val propertyMap: ObservableMap<Property<*>, () -> Property<*>?> = FXCollections.observableHashMap<Property<*>, () -> Property<*>?>()
-    val propertyCache: ObservableMap<Property<*>, Property<*>> = FXCollections.observableHashMap<Property<*>, Property<*>>()
-    val externalChangeListeners: ObservableMap<Property<*>, ChangeListener<Any>> = FXCollections.observableHashMap<Property<*>, ChangeListener<Any>>()
-    val dirtyProperties: ObservableList<ObservableValue<*>> = FXCollections.observableArrayList<ObservableValue<*>>()
+    val propertyMap: ObservableMap<Property<*>, () -> Property<*>?> = FXCollections.observableHashMap()
+    val propertyCache: ObservableMap<Property<*>, Property<*>> = FXCollections.observableHashMap()
+    val externalChangeListeners: ObservableMap<Property<*>, ChangeListener<Any>> = FXCollections.observableHashMap()
+    val dirtyProperties: ObservableList<ObservableValue<*>> = FXCollections.observableArrayList()
     open val dirty = booleanBinding(dirtyProperties, dirtyProperties) { isNotEmpty() }
     @Deprecated("Use dirty property instead", ReplaceWith("dirty"))
     fun dirtyStateProperty() = dirty
@@ -64,7 +63,8 @@ open class ViewModel : Component(), ScopedInstance {
                     it.addedSubList.forEach { facade ->
                         facade.addListener { obs, _, nv ->
                             if (validate(fields = arrayOf(facade))) {
-                                val prop = propertyMap[obs]!!.invoke() as Property<Any?>?
+                                @Suppress("UNCHECKED_CAST")
+                                val prop = propertyMap[obs]!!.invoke() as? Property<Any?>
                                 prop?.value = nv
                             }
                         }
@@ -126,7 +126,7 @@ open class ViewModel : Component(), ScopedInstance {
                 ObservableMap::class.java.isAssignableFrom(propertyType) -> BindingAwareSimpleMapProperty<Any, Any>(this, prop?.name)
 
             // Match against the type of the Property
-                java.lang.Integer::class.java.isAssignableFrom(typeParam) -> BindingAwareSimpleIntegerProperty(this, prop?.name)
+                Integer::class.java.isAssignableFrom(typeParam) -> BindingAwareSimpleIntegerProperty(this, prop?.name)
                 java.lang.Long::class.java.isAssignableFrom(typeParam) -> BindingAwareSimpleLongProperty(this, prop?.name)
                 java.lang.Double::class.java.isAssignableFrom(typeParam) -> BindingAwareSimpleDoubleProperty(this, prop?.name)
                 java.lang.Float::class.java.isAssignableFrom(typeParam) -> BindingAwareSimpleFloatProperty(this, prop?.name)
@@ -218,7 +218,7 @@ open class ViewModel : Component(), ScopedInstance {
     }
 
     fun commit(vararg fields: ObservableValue<*>, successFn: () -> Unit = {}) =
-            commit(false, true, fields = *fields, successFn = successFn)
+            commit(false, true, fields = fields, successFn = successFn)
 
     /**
      * Perform validation and flush the values into the source object if validation passes.
@@ -232,12 +232,13 @@ open class ViewModel : Component(), ScopedInstance {
 
         val commits = mutableListOf<Commit>()
         runAndWait {
-            if (!validate(focusFirstError, fields = *fields) && !force) {
+            if (!validate(focusFirstError, fields = fields) && !force) {
                 committed = false
             } else {
                 val commitThese = if (fields.isNotEmpty()) fields.toList() else propertyMap.keys
                 for (facade in commitThese) {
-                    val prop: Property<*>? = propertyMap[facade]?.invoke()
+                    @Suppress("UNCHECKED_CAST")
+                    val prop = propertyMap[facade]?.invoke() as? Property<Any?>
                     if (prop != null) {
                         val event = Commit(facade, prop.value, facade.value)
                         commits.add(event)
@@ -288,19 +289,18 @@ open class ViewModel : Component(), ScopedInstance {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> assignValue(facade: Property<T>, prop: Property<T>?, defaultValue: T? = null) {
-        facade.value = prop?.value ?: defaultValue
+    fun assignValue(facade: Property<*>, prop: Property<*>?, defaultValue: Any? = null) {
+        val untypedFacade = facade as Property<Any?>
+        untypedFacade.value = prop?.value ?: defaultValue
 
         // Never allow null collection values
         if (facade.value == null) {
             when (facade) {
-                is ListProperty<*> -> (facade as ListProperty<Any?>).value = FXCollections.observableArrayList()
-                is SetProperty<*> -> (facade as SetProperty<Any?>).value = FXCollections.observableSet()
-                is MapProperty<*, *> -> (facade as MapProperty<Any?, Any?>).value = FXCollections.observableHashMap()
-
-                // not sure these are right, but keeping legacy behavior from 1.x
-                is MutableList<*> -> (facade as Property<MutableList<Any?>>).value = ArrayList()
-                is MutableMap<*, *> -> (facade as Property<MutableMap<Any?, Any?>>).value = HashMap()
+                is ListProperty<*> -> untypedFacade.value = FXCollections.observableArrayList<Any?>()
+                is SetProperty<*> -> untypedFacade.value = FXCollections.observableSet<Any?>()
+                is MapProperty<*, *> -> untypedFacade.value = FXCollections.observableHashMap<Any?, Any?>()
+                is MutableList<*> -> untypedFacade.value = ArrayList<Any>()
+                is MutableMap<*, *> -> untypedFacade.value = HashMap<Any, Any>()
             }
         }
     }
@@ -400,7 +400,7 @@ fun <V : ItemViewModel<S>, S, T> V.bindToRowItem(cellFragment: TableCellFragment
 
 fun <V : ViewModel, T : ObservableValue<X>, X> V.dirtyStateFor(modelField: KProperty1<V, T>): BooleanBinding {
     val prop = modelField.get(this)
-    return Bindings.createBooleanBinding(Callable { prop in dirtyProperties }, dirtyProperties)
+    return Bindings.createBooleanBinding({ prop in dirtyProperties }, dirtyProperties)
 }
 
 fun <V : ViewModel, T> V.rebindOnTreeItemChange(observable: ObservableValue<TreeItem<T>>, op: V.(T?) -> Unit) {
@@ -472,7 +472,7 @@ inline fun <reified T> ChoiceBox<T>.validator(trigger: ValidationTrigger = Valid
 inline fun <reified T> Spinner<T>.validator(trigger: ValidationTrigger = ValidationTrigger.OnChange(), noinline validator: ValidationContext.(T?) -> ValidationMessage?)
         = validator(this, valueFactory.valueProperty(), trigger, validator)
 
-inline fun <reified T> Spinner<T>.required(trigger: ValidationTrigger = tornadofx.ValidationTrigger.OnChange(), message: String? = tornadofx.viewModelBundle["required"])
+inline fun <reified T> Spinner<T>.required(trigger: ValidationTrigger = ValidationTrigger.OnChange(), message: String? = viewModelBundle["required"])
         = validator(trigger) { if (it == null) error(message) else null }
 
 /**

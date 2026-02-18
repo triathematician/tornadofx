@@ -33,7 +33,7 @@ class TableViewTest {
                     column("A Column", TestObject::A)
                     column("A Column", Boolean::class)
                     column("B Column", Double::class) {
-                        value { it.value.B }
+                        value { it.value.B.value }
                     }
                     column("C Column", TestObject::C)
                 }
