@@ -23,6 +23,7 @@ import tornadofx.FX.Companion.inheritScopeHolder
 import tornadofx.FX.Companion.stylesheets
 import tornadofx.osgi.impl.getBundleId
 import java.lang.ref.WeakReference
+import java.lang.reflect.InaccessibleObjectException
 import java.net.MalformedURLException
 import java.net.URL
 import java.nio.file.Path
@@ -671,23 +672,31 @@ fun EventTarget.getChildList(): MutableList<Node>? = when (this) {
     is ToolBar -> items
     is Pane -> children
     is Group -> children
-    is HBox -> children
-    is VBox -> children
     is Control -> (skin as? SkinBase<*>)?.children ?: getChildrenReflectively()
     is Parent -> getChildrenReflectively()
     else -> null
 }
 
 @Suppress("UNCHECKED_CAST", "PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-private fun Parent.getChildrenReflectively(): MutableList<Node>? = when (this) {
-    is Pane -> children as MutableList<Node>
-    is Group -> children as MutableList<Node>
-    else -> {
+private fun Parent.getChildrenReflectively(): MutableList<Node>? {
+    return try {
         val getter = this.javaClass.findMethodByName("getChildren")
-        if (getter != null && java.util.List::class.java.isAssignableFrom(getter.returnType)) {
+        if (getter != null && List::class.java.isAssignableFrom(getter.returnType)) {
             getter.isAccessible = true
             getter.invoke(this) as MutableList<Node>
         } else null
+    } catch (e: InaccessibleObjectException) {
+        log.warning("""
+                |getChildrenReflectively() failed on ${this.javaClass.name}
+                |This class is not a Pane, Group, or known Control subtype, and its
+                |module does not permit reflective access to getChildren().
+                |
+                |Potential workaround is to add the following JVM argument to your application:
+                |  --add-opens=${this.javaClass.module.name}/${this.javaClass.packageName}=ALL-UNNAMED
+                |
+                |Caused by: ${e.message}
+            """.trimMargin())
+        null
     }
 }
 

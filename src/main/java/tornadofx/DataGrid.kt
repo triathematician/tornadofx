@@ -19,6 +19,7 @@ import javafx.scene.control.SelectionMode.MULTIPLE
 import javafx.scene.control.SelectionMode.SINGLE
 import javafx.scene.control.skin.CellSkinBase
 import javafx.scene.control.skin.VirtualContainerBase
+import javafx.scene.control.skin.VirtualFlow
 import javafx.scene.input.*
 import javafx.scene.layout.HBox
 import javafx.scene.layout.StackPane
@@ -615,6 +616,21 @@ class DataGridSelectionModel<T>(val dataGrid: DataGrid<T>) : MultipleSelectionMo
 
 }
 
+/** Allow calling protected methods of VirtualFlow from DataGridSkin without making them public in VirtualFlow */
+class DataGridVirtualFlow<T>() : VirtualFlow<DataGridRow<T>>() {
+    public override fun reconfigureCells() {
+        super.reconfigureCells()
+    }
+
+    public override fun recreateCells() {
+        super.recreateCells()
+    }
+
+    public override fun rebuildCells() {
+        super.rebuildCells()
+    }
+}
+
 @Suppress("UNCHECKED_CAST")
 class DataGridSkin<T>(control: DataGrid<T>) : VirtualContainerBase<DataGrid<T>, DataGridRow<T>>(control) {
     private val gridViewItemsListener = ListChangeListener<T> {
@@ -684,6 +700,8 @@ class DataGridSkin<T>(control: DataGrid<T>) : VirtualContainerBase<DataGrid<T>, 
 
     override fun computePrefWidth(height: Double, topInset: Double, rightInset: Double, bottomInset: Double, leftInset: Double) = 500.0
 
+    protected override fun createVirtualFlow() = DataGridVirtualFlow<T>()
+
     override fun updateItemCount() {
         if (virtualFlow == null) return
 
@@ -725,19 +743,17 @@ class DataGridSkin<T>(control: DataGrid<T>) : VirtualContainerBase<DataGrid<T>, 
         virtualFlow.resizeRelocate(x1, y1, w1, h1)
     }
 
-    // TODO: Remove once https://github.com/javafxports/openjdk-jfx/pull/163 is merged
     private fun recreateCells() {
-        ReflectionUtils.callMethod(virtualFlow, "recreateCells")
+        (virtualFlow as DataGridVirtualFlow<T>).recreateCells()
     }
 
     private fun rebuildCells() {
-        ReflectionUtils.callMethod(virtualFlow, "rebuildCells")
+        (virtualFlow as DataGridVirtualFlow<T>).rebuildCells()
     }
 
     private fun reconfigureCells() {
-        ReflectionUtils.callMethod(virtualFlow, "reconfigureCells")
+        (virtualFlow as DataGridVirtualFlow<T>).reconfigureCells()
     }
-
 
 }
 
