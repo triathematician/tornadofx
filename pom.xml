@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-      This is a version of TornadoFx updated for Java17, JavaFx21, and Kotlin 1.9.25.
+      This is a version of TornadoFx updated for Java17, JavaFx21, and Kotlin 2.1.x.
       It was forked from the jdk10 branch at https://github.com/edvin/tornadofx.
       There are a few minor changes to work with the newer versions of Java, JavaFx, and Kotlin,
       but the majority of the code is unchanged.
@@ -158,8 +160,8 @@
         <connection>scm:git:git@github.com:triathematician/tornadofx.git</connection>
         <developerConnection>scm:git:git@github.com:triathematician/tornadofx.git</developerConnection>
         <url>git@github.com:edvin/triathematician.git</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <build>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
@@ -334,10 +336,10 @@
             </plugin>
         </plugins>
     </build>
-<!--
-    -add-opens tornadofx.tests=javafx.base
-    -add-reads jdk.httpserver=tornadofx
--->
+    <!--
+        -add-opens tornadofx.tests=javafx.base
+        -add-reads jdk.httpserver=tornadofx
+    -->
 
 
     <profiles>
