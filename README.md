@@ -1,10 +1,11 @@
 ![TornadoFX Logo](graphics/tornado-fx-logo.png?raw=true "TornadoFX")
 # TornadoFX
 
-JavaFX Framework for Kotlin (Java 10 Port in this branch)
+JavaFX Framework for Kotlin — this is a fork of
+[edvin/tornadofx (`jdk10` branch)](https://github.com/edvin/tornadofx/tree/jdk10)
+updated to build against Java 17, JavaFX 21 (`21.0.9`), and Kotlin 2.1.x+ (`2.1.21`).
 
-[![Travis CI](https://travis-ci.org/edvin/tornadofx.svg)](https://travis-ci.org/edvin/tornadofx)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.tornado/tornadofx/badge.svg?cachebust)](https://search.maven.org/#search|ga|1|no.tornado.tornadofx)
+[![Maven Central](https://img.shields.io/maven-central/v/com.googlecode.blaisemath.tornado/tornadofx-fx21k2.svg)](https://central.sonatype.com/artifact/com.googlecode.blaisemath.tornado/tornadofx-fx21k2)
 [![Apache License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Features
@@ -23,9 +24,10 @@ JavaFX Framework for Kotlin (Java 10 Port in this branch)
 
 ## Important version note
 
-TornadoFX requires Kotlin 1.1.2 and jvmTarget 1.8. Make sure you update your IDE plugins (Kotlin + TornadoFX).
+This fork requires Java 17, JavaFX 21 (`21.0.9`), and Kotlin 2.1.x+ (`2.1.21`) and jvmTarget 17.
+Make sure you update your IDE plugins (Kotlin + TornadoFX).
 
-After updating IntelliJ IDEA, make sure your Kotlin target version is 1.1 (Project Settings -> Modules -> Kotlin -> Language Version / API Version)
+After updating IntelliJ IDEA, make sure your Kotlin target version matches (Project Settings -> Modules -> Kotlin -> Language Version / API Version)
 
 Remember to update your build system to configure the `jvmTarget` as well.
 
@@ -33,7 +35,7 @@ For Maven, you add the following configuration block to `kotlin-maven-plugin`:
 
 ```xml
 <configuration>
-    <jvmTarget>1.8</jvmTarget>
+    <jvmTarget>17</jvmTarget>
 </configuration>
 ```
 
@@ -41,7 +43,7 @@ For Gradle, it means configuring the `kotlinOptions` of the Kotlin compilation t
 
 ```gradle
 compileKotlin {
-    kotlinOptions.jvmTarget= "1.8"
+    kotlinOptions.jvmTarget= "17"
 }
 ```
 
