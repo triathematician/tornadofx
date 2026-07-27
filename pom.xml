@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-      This is a version of TornadoFx updated for Java17, JavaFx21, and Kotlin 2.1.x.
+      This is a version of TornadoFx updated for Java17, JavaFx21, and Kotlin 2.4.x.
       It was forked from the jdk10 branch at https://github.com/edvin/tornadofx.
       There are a few minor changes to work with the newer versions of Java, JavaFx, and Kotlin,
       but the majority of the code is unchanged.
@@ -397,7 +397,7 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.10.0</version>
+                        <version>0.11.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
@@ -417,9 +417,9 @@
     </pluginRepositories>
 
     <properties>
-        <javafx.version>21.0.9</javafx.version>
-        <kotlin.version>2.1.21</kotlin.version>
-        <kotlin.version.dokka>2.1.0</kotlin.version.dokka>
+        <javafx.version>21.0.12</javafx.version>
+        <kotlin.version>2.4.10</kotlin.version>
+        <kotlin.version.dokka>2.2.0</kotlin.version.dokka>
 
         <org.glassfish.javax.json.version>1.1.4</org.glassfish.javax.json.version>
         <org.apache.httpcomponents.httpclient.version>4.5.14</org.apache.httpcomponents.httpclient.version>
@@ -429,14 +429,14 @@
         <org.testfx.testfx-junit.version>4.0.18</org.testfx.testfx-junit.version>
         <de.jensd.fontawesomefx.version>4.7.0-9.1.2</de.jensd.fontawesomefx.version>
 
-        <maven.enforcer.version>3.6.2</maven.enforcer.version>
+        <maven.enforcer.version>3.6.3</maven.enforcer.version>
         <maven.release.version>3.3.1</maven.release.version>
         <maven.compiler.version>3.15.0</maven.compiler.version>
         <maven.source.version>3.4.0</maven.source.version>
-        <maven.jar.version>3.5.0</maven.jar.version>
+        <maven.jar.version>3.5.1</maven.jar.version>
         <maven.bundle.version>3.5.1</maven.bundle.version>
         <maven.gpg.version>3.2.8</maven.gpg.version>
-        <maven.surefire.version>3.5.4</maven.surefire.version>
+        <maven.surefire.version>3.5.6</maven.surefire.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>

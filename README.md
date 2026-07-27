@@ -3,7 +3,7 @@
 
 JavaFX Framework for Kotlin — this is a fork of
 [edvin/tornadofx (`jdk10` branch)](https://github.com/edvin/tornadofx/tree/jdk10)
-updated to build against Java 17, JavaFX 21 (`21.0.9`), and Kotlin 2.1.x+ (`2.1.21`).
+updated to build against Java 17, JavaFX 21 (`21.0.12`), and Kotlin 2.4.x+ (`2.4.10`).
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.googlecode.blaisemath.tornado/tornadofx-fx21k2.svg)](https://central.sonatype.com/artifact/com.googlecode.blaisemath.tornado/tornadofx-fx21k2)
 [![Apache License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
@@ -24,7 +24,7 @@ updated to build against Java 17, JavaFX 21 (`21.0.9`), and Kotlin 2.1.x+ (`2.1.
 
 ## Important version note
 
-This fork requires Java 17, JavaFX 21 (`21.0.9`), and Kotlin 2.1.x+ (`2.1.21`) and jvmTarget 17.
+This fork requires Java 17, JavaFX 21 (`21.0.12`), and Kotlin 2.4.x+ (`2.4.10`) and jvmTarget 17.
 Make sure you update your IDE plugins (Kotlin + TornadoFX).
 
 After updating IntelliJ IDEA, make sure your Kotlin target version matches (Project Settings -> Modules -> Kotlin -> Language Version / API Version)

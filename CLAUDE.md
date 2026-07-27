@@ -6,12 +6,12 @@ Guidance for Claude Code (and other coding agents) working in this repository.
 
 This is `triathematician/tornadofx` — a fork of
 [edvin/tornadofx (`jdk10` branch)](https://github.com/edvin/tornadofx/tree/jdk10)
-updated to build against Java 17, JavaFX 21 (currently `21.0.9`), and Kotlin 2.1.x+
-(currently `2.1.21`) — see the `<properties>` block in `pom.xml` for the exact pinned
+updated to build against Java 17, JavaFX 21 (currently `21.0.12`), and Kotlin 2.4.x+
+(currently `2.4.10`) — see the `<properties>` block in `pom.xml` for the exact pinned
 versions. TornadoFX is a lightweight JavaFX framework for Kotlin.
 
 Active development happens on the `jfx17-fx21-kotlin21` branch (the name predates the
-`2.1.x+` Kotlin range above — Kotlin has since been bumped forward within that branch).
+Kotlin range above — Kotlin has since been bumped forward within that branch).
 
 - Single Maven module — one `pom.xml` at the repo root, artifact
   `com.googlecode.blaisemath.tornado:tornadofx-fx21k2`. No multi-module/reactor setup.
