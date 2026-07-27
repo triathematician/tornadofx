@@ -16,7 +16,8 @@ Active development happens on the `jfx17-fx21-kotlin21` branch (the name predate
 - Single Maven module — one `pom.xml` at the repo root, artifact
   `com.googlecode.blaisemath.tornado:tornadofx-fx21k2`. No multi-module/reactor setup.
 - Source lives under `src/main/kotlin`, tests under `src/test/kotlin`.
-- There is no `.github/workflows` CI configured in this repo — tests are run locally/manually.
+- CI runs via `.github/workflows/run-tests.yml` on every push/PR: JDK 17 on `ubuntu-latest`,
+  `mvn test` wrapped in `xvfb-run` (JavaFX/TestFX needs a virtual display on Linux).
 
 ## Build & Test
 
