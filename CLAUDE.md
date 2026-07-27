@@ -58,6 +58,12 @@ single library. Relevant version properties are centralized at the bottom of `po
 (`kotlin.version`, `javafx.version`, `de.jensd.fontawesomefx.version`, the `maven.*.version`
 plugin versions, etc.).
 
+**Base branch note:** active development happens on `jfx17-fx21-kotlin21`, but this repo's
+GitHub-registered default branch is still `master`. Branch from and target
+`jfx17-fx21-kotlin21` throughout this playbook — always pass `--base jfx17-fx21-kotlin21`
+explicitly to `gh pr create` (and any other `gh`/`git` command that assumes a default
+branch), since a plain invocation would otherwise target `master`.
+
 1. **Open a tracking issue** — `gh issue create` in `triathematician/tornadofx`, e.g. title
    "Dependency maintenance: <date/scope>", with a checklist body that gets filled in as the
    process progresses.
@@ -74,8 +80,9 @@ plugin versions, etc.).
 4. **Decide scope for this cycle** — the agent proposes which updates to tackle now (based
    on the classification in step 3) and which to defer, but the **user approves the final
    list** before any code changes are made.
-5. **Branch and update** — one branch/PR touching `pom.xml` version properties (and README
-   where a version is user-visible, e.g. the `jvmTarget`/Kotlin-version notes).
+5. **Branch and update** — one branch, cut from `jfx17-fx21-kotlin21`, touching `pom.xml`
+   version properties (and README where a version is user-visible, e.g. the
+   `jvmTarget`/Kotlin-version notes).
 6. **Run automated tests**:
    ```bash
    mvn install
@@ -86,12 +93,13 @@ plugin versions, etc.).
    TornadoFX app manually to confirm rendering/reflection still works. State the reasoning
    for running or skipping this step.
 8. **Fix and iterate** until all triggered tests are green.
-9. **Push the branch and open a PR** via `gh pr create`, referencing the tracking issue,
-   summarizing the change and test evidence gathered.
+9. **Push the branch and open a PR** via `gh pr create --base jfx17-fx21-kotlin21`,
+   referencing the tracking issue, summarizing the change and test evidence gathered.
 10. **Wait for review, then the user merges.** The agent does not merge dependency-update
     PRs itself — a human must review and click merge. Address any review feedback by
     pushing fixes to the same branch.
-11. **On merge** — close the tracking issue (`gh issue close`), pull the target branch locally.
+11. **On merge** — close the tracking issue (`gh issue close`), pull `jfx17-fx21-kotlin21`
+    locally.
 12. **Release — prepared by the agent, executed by the user.** Prepare a release
     checklist/notes but do **not** run `mvn release:prepare`/`mvn release:perform` — that's
     a manual step the user runs, since it publishes irreversibly to Maven Central.
