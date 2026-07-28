@@ -91,7 +91,9 @@ branch), since a plain invocation would otherwise target `master`.
 7. **Manual smoke test, conditionally** — only for major-version or otherwise
    behavior-relevant bumps (e.g. a JavaFX or Kotlin major/minor bump), exercise a sample
    TornadoFX app manually to confirm rendering/reflection still works. State the reasoning
-   for running or skipping this step.
+   for running or skipping this step. The manually-runnable apps under
+   `src/test/kotlin/tornadofx/testapps` are a candidate for this (not wired into the
+   automated test run) — usefulness unverified, so sanity-check before relying on them.
 8. **Fix and iterate** until all triggered tests are green.
 9. **Push the branch and open a PR** via `gh pr create --base jfx17-fx21-kotlin21`,
    referencing the tracking issue, summarizing the change and test evidence gathered.
